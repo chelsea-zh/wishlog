@@ -1,0 +1,43 @@
+.todo {
+  background-color: red;
+  position: absolute;
+  left: 40vw;
+  bottom: 5vh;
+  width: 55vw;
+  height: 70vh;
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.sel {
+  background-color: darkslategray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dailies {
+  background-color: coral;
+  grid-row: 1 / span 2;
+}
+
+.custom {
+  background-color: goldenrod;
+  grid-row: 1 / span 2;
+}
+
+.tasklist, .unclaimed, .claimed {
+    display: flex;
+    flex-direction: column;
+}
+
+.claimed .task{
+    background-color: beige;
+}
+
+.task {
+  background-color: azure;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr;
+}

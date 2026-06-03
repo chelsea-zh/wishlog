@@ -16,15 +16,6 @@
   height: 15vh;
 }
 
-.todo {
-  background-color: red;
-  position: absolute;
-  left: 40vw;
-  bottom: 5vh;
-  width: 55vw;
-  height: 70vh;
-}
-
 .schedule {
   background-color: cornflowerblue;
   position: absolute;
