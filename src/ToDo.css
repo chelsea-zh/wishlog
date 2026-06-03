@@ -46,6 +46,16 @@
 .creator {
     background-color: chocolate;
     display: grid;
-    grid-template-columns: 1fr 3fr 2fr;
+    grid-template-columns: 4fr 2fr;
     align-items: center;
+}
+
+.creator form {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.creator input {
+    width:100%;
+    height:2.5em;
 }
