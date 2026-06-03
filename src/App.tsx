@@ -3,17 +3,6 @@ import ToDo from './ToDo'
 import Schedule from './Schedule';
 import './App.css'
 
-function DayBlock() {}
-
-function Day({date, day}) {
-  return (
-    <>
-      <h2>{date}</h2>
-      <h2>{day}</h2>
-    </>
-  );
-}
-
 function Title() {
   return(
     <div className='title'>

@@ -1,0 +1,35 @@
+.schedule {
+  background-color: cornflowerblue;
+  position: absolute;
+  left: 15vw;
+  top: 5vh;
+  width: 20vw;
+  height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 15% 75%;
+}
+
+.hourline {
+    background-color: bisque;
+    display:grid;
+    grid-template-columns: 1fr 4fr;
+    height: 3vh;
+    align-content: center;
+}
+
+.hourline h4 {
+    width: 100%;
+    text-align: center;
+    /* height: 1em; */
+    /* margin: auto; */
+}
+
+.hourline hr {
+    background-color: darkgoldenrod;
+    width:90%;
+    margin:auto;
+    border-color: black;
+    border-style: solid;
+    border-radius: 1px;
+}
