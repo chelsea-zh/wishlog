@@ -18,19 +18,15 @@ export default function Schedule() {
         )
     }
 
-    function createBlock(title, start, end) {
-        addBlock({id:blocks.length+1, name:title, start:start, end:end})
-    }
-
     return(
         <div className = "schedule">
             <Day />
             <div style={{position:'relative'}}>
                 <Timeline />
                 <Blocks 
-                    blocks={blocks} />
+                    blocks={blocks}  deleteBlock={deleteBlock}/>
             </div>
-            <BlockCreator createBlock={createBlock}/>
+            <BlockCreator blocks={blocks} addBlock={addBlock}/>
         </div>
     )
 }
@@ -75,7 +71,7 @@ function Hourline(hour:number) {
     )
 }
 
-function Blocks({blocks}) {
+function Blocks({blocks, deleteBlock}) {
 
     let events = blocks.map(block =>
         <div className="block" key={block.id} style={{
@@ -87,6 +83,10 @@ function Blocks({blocks}) {
             right: '10%'
         }}>
             {block.name}
+            <div 
+                style={{position:"absolute", right:"0px", top:"0px"}}
+                onClick={() => deleteBlock(block.start)}
+            >del</div>
         </div>
     )
 
@@ -97,12 +97,12 @@ function Blocks({blocks}) {
     )
 }
 
-function BlockCreator({createBlock}) {
+function BlockCreator({blocks, addBlock}) {
     const [creating, setCreating] = useState(false)
 
     return(
         <div className="blockCreator">
-            {creating && <BlockInfo createBlock={createBlock} setCreating={setCreating}/>}
+            {creating && <BlockInfo blocks = {blocks} addBlock={addBlock} setCreating={setCreating}/>}
             <div className="blockButton" onClick={() => setCreating(true)}>
 
             </div>
@@ -110,10 +110,11 @@ function BlockCreator({createBlock}) {
     )
 }
 
-function BlockInfo({createBlock, setCreating}) {
+function BlockInfo({blocks, addBlock, setCreating}) {
     const [title, setTitle] = useState<string>("")
     const [start, setStart] = useState<number>()
     const [end, setEnd] = useState<number>()
+    const [valid, setValid] = useState<boolean>()
 
     function toMin(time:string) {
         return(Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]))
@@ -123,10 +124,31 @@ function BlockInfo({createBlock, setCreating}) {
         return(String(Math.trunc(min / 60)).padStart(2, "0") + ":" + String(min % 60).padStart(2, "0"))
     }
 
+    function isValid(title, start, end) {
+        let v = true
+        blocks.forEach((block) => {
+            if (end >= block.start && end <= block.end) {
+                v = false
+            } else if (start >= block.start && start <= block.end) {
+                v = false
+            } else if (start <= block.start && end>= block.end) {
+                v = false
+            }
+        })
+
+        if (v) {
+            addBlock({id:blocks.length+1, name:title, start:start, end:end})
+            setCreating(false)
+            setValid(true)
+        } else {
+            setValid(false)
+        }
+    }
+
     return(
         <div className="blockInfo">
             <span></span>
-            <div id="blockForm">
+            <div className="blockForm">
                 <form>
                     <h2>Title</h2>
                     <input 
@@ -153,8 +175,8 @@ function BlockInfo({createBlock, setCreating}) {
                 </form>
                 <div>
                     <button onClick = {() =>
-                        {createBlock(title, start, end);
-                        setTitle(""); setStart(null); setEnd(null); setCreating(false)}
+                        {isValid(title, start, end);
+                        setTitle(""); setStart(null); setEnd(null)}
                     }>Submit</button>
                     <button onClick = {() =>
                         {setTitle(""); setStart(null); setEnd(null); setCreating(false)}
@@ -162,6 +184,11 @@ function BlockInfo({createBlock, setCreating}) {
                 </div>
                 
             </div>
+            {valid == false && <div className="blockForm">
+                <h1>Overlapping Times!</h1>
+                <h2>Try again.</h2>
+                <button onClick = {() => {setValid(null); setCreating(false)}}>OK</button>
+            </div>}
         </div>
     )
 }

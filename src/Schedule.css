@@ -48,6 +48,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    pointer-events: none;
 }
 
 .blockButton {
@@ -55,6 +56,7 @@
     position:absolute;
     width: 100px;
     height:100px;
+    pointer-events: auto;
 }
 
 .blockInfo {
@@ -70,7 +72,7 @@
     height: 100%;
 }
 
-#blockForm {
+.blockForm {
     background-color: palevioletred;
     position: absolute;
     bottom: 5%;
@@ -88,8 +90,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    pointer-events: auto;
 }
 
 .blockInfo button {
     display: block;
+    pointer-events: auto;
 }
