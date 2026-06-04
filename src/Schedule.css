@@ -10,6 +10,16 @@
   grid-template-rows: 15% 75%;
 }
 
+.day {
+    background-color: burlywood;
+    display:grid;
+    /* place-items: center; */
+    grid-template-columns: 1fr 1fr;
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+}
+
 .hourline {
     background-color: bisque;
     display:grid;

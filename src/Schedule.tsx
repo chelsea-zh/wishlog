@@ -1,30 +1,51 @@
 import { useState } from "react"
 import './Schedule.css'
 
-type Block = {id:number, name:string, start:number, end:number}
-
-let blocks: Block[] = [
-    {id:1, name: "string", start: 8, end: 9}
-]
-
-let hourHeight = 2.5
-
 export default function Schedule() {
+    const [blocks, setBlocks] = useState([
+        {id:1, name: "string", start: 8, end: 9},
+        {id:1, name: "string", start: 3, end: 5},
+        {id:1, name: "string", start: 15, end: 19}
+    ])
+
+    function addBlock(block){
+        setBlocks(blocks => [...blocks, block])
+    }
+
+    function deleteBlock(start){
+        setBlocks(blocks =>
+            blocks.filter(block => block.start != start)
+        )
+    }
+
     return(
         <div className = "schedule">
-            <h1>schedule</h1>
-            <div><Timeline/></div>
+            <Day />
+            <div style={{position:'relative'}}>
+                <Timeline />
+                <Blocks 
+                    blocks={blocks} />
+            </div>
         </div>
     )
 }
 
-function Date({date, day}) {
-  return (
-    <>
-      <h2>{date}</h2>
-      <h2>{day}</h2>
-    </>
-  );
+function Day() {
+    let today = new Date();
+    let date = String(today.getDate()).padStart(2, '0');
+    let month = today.toString().split(" ")[1];
+    let day = today.toLocaleDateString('en-US', {weekday:'short'});
+
+    return (
+        <div className="day">
+            <h2 style={{
+                gridRow: "1 / span 2", 
+                textAlign:'center', 
+                margin:'auto'}}>{date}</h2>
+            <h2>{day}</h2>
+            <h2>{month}</h2>
+        </div>
+    );
 }
 
 function Timeline() {
@@ -49,10 +70,17 @@ function Hourline(hour:number) {
     )
 }
 
-function Blocks() {
+function Blocks({blocks}) {
 
     let events = blocks.map(block =>
-        <div className="block" key={block.id}>
+        <div className="block" key={block.id} style={{
+            backgroundColor:'cadetblue',
+            position:'absolute',
+            width:'60%',
+            height: `calc(${3 * (block.end - block.start)}vh + 2px)`,
+            top: `calc(${1.5 + 3 * block.start}vh - 1px)`,
+            right: '10%'
+        }}>
             {block.name}
         </div>
     )

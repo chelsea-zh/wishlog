@@ -14,5 +14,7 @@
   top: 5vh;
   width: 30vw;
   height: 15vh;
+  display: flex;
+  align-items: center;
 }
 
