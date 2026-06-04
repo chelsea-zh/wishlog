@@ -190,7 +190,7 @@ function TaskCreator({addTask}) {
     const [goal, setGoal] = useState("")
 
     return(
-        <div className='creator'>
+        <div className='taskCreator'>
             <form>
                 <input 
                     type="number" 
