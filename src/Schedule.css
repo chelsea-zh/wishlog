@@ -1,28 +1,42 @@
 .schedule {
-  background-color: cornflowerblue;
-  position: absolute;
-  left: 15vw;
-  top: 5vh;
-  width: 20vw;
-  height: 90vh;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 15% 85%;
+    background-color: var(--dark-1);
+    position: absolute;
+    left: 15vw;
+    top: 5vh;
+    width: 20vw;
+    height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% 85%;
+    border-radius: var(--border-rad);
 }
 
 .day {
-    background-color: burlywood;
-    display:grid;
+    /* background-color: burlywood; */
+    display: grid;
     /* place-items: center; */
     grid-template-columns: 1fr 1fr;
     height: fit-content;
-    width: fit-content;
+    width: 40%;
     margin: auto;
+    font-family: var(--title-font);
+}
+
+.day h2 {
+    font-size: 1.5rem;
+}
+
+.day h1 {
+    grid-row: 1 / span 2;
+    text-align: center;
+    margin: auto;
+    font-size: 2.5rem;
+    padding-right: .5rem;
 }
 
 .hourline {
-    background-color: bisque;
-    display:grid;
+    /* background-color: bisque; */
+    display: grid;
     grid-template-columns: 1fr 4fr;
     height: 3vh;
     align-content: center;
@@ -33,15 +47,38 @@
     text-align: center;
     /* height: 1em; */
     /* margin: auto; */
+    font-family: var(--text-font);
 }
 
 .hourline hr {
-    background-color: darkgoldenrod;
-    width:90%;
-    margin:auto;
+    /* background-color: darkgoldenrod; */
+    width: 90%;
+    margin: auto;
     border-color: black;
     border-style: solid;
     border-radius: 1px;
+}
+
+.block {
+    background-color: var(--light-2);
+    position: absolute;
+    width: 60%;
+    right: 10%;
+    border-radius: var(--border-rad);
+}
+
+.block h4 {
+    padding: 0.1rem;
+    font-family: var(--text-font);
+    font-size: 1rem;
+}
+
+.block h4:nth-last-child(1) {
+    transition: color var(--hover-time);
+}
+
+.block h4:nth-last-child(1):hover {
+    color: var(--dark-1);
 }
 
 .blockCreator {
@@ -52,11 +89,28 @@
 }
 
 .blockButton {
-    background-color: darkslateblue;
-    position:absolute;
-    width: 100px;
-    height:100px;
+    /* background-color: darkslateblue; */
+    position: absolute;
+    width: 5vw;
+    aspect-ratio: 1;
     pointer-events: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: calc(7.5% - 2.5vw);
+    left: calc(15% - 2.5vw);
+}
+
+.blockButton h1 {
+    font-family: var(--text-font);
+    cursor: pointer;
+    font-size: 2em;
+    transition: font-size var(--hover-time);
+    height: fit-content;
+}
+
+.blockButton h1:hover {
+    font-size: 2.5em;
 }
 
 .blockInfo {
@@ -70,19 +124,31 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    border-radius: var(--border-rad);
 }
 
 .blockForm {
-    background-color: palevioletred;
+    background-color: var(--medium);
     position: absolute;
-    bottom: 5%;
-    left: 5%;
-    height: 75%;
-    width: 90%;
+    bottom: 1.25vw;
+    left: 1.25vw;
+    height: calc(100% - 2.5vw);
+    width: calc(100% - 2.5vw);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    border-radius: var(--border-rad);
+    text-align: center;
+}
+
+.blockForm h1 {
+    font-family: var(--title-font);
+}
+
+.blockForm h2 {
+    font-family: var(--title-font);
+    margin: 1rem;
 }
 
 .blockInfo form {
@@ -93,7 +159,35 @@
     pointer-events: auto;
 }
 
+.blockInfo input {
+    font-family: var(--text-font);
+    border-radius: var(--border-rad);
+    border: none;
+    padding: 0.5em;
+}
+
+.blockInfo input:focus {
+    outline: solid 2px var(--dark-1);
+}
+
 .blockInfo button {
+    background-color: var(--dark-2);
+    color: var(--light-1);
     display: block;
     pointer-events: auto;
+    cursor: pointer;
+    font-family: var(--title-font);
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    margin: 0.75rem;
+    border: none;
+    border-radius: var(--border-rad);
+    transition: top var(--hover-time), color var(--hover-time);
+    top: 0;
+}
+
+.blockInfo button:hover{
+    position: relative;
+    top: -.25rem;
+    color: var(--light-2);
 }

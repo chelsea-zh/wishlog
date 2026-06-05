@@ -39,10 +39,7 @@ function Day() {
 
     return (
         <div className="day">
-            <h2 style={{
-                gridRow: "1 / span 2", 
-                textAlign:'center', 
-                margin:'auto'}}>{date}</h2>
+            <h1>{date}</h1>
             <h2>{day}</h2>
             <h2>{month}</h2>
         </div>
@@ -75,18 +72,14 @@ function Blocks({blocks, deleteBlock}) {
 
     let events = blocks.map(block =>
         <div className="block" key={block.id} style={{
-            backgroundColor:'cadetblue',
-            position:'absolute',
-            width:'60%',
             height: `calc(${3 * (block.end/60 - block.start/60)}vh + 2px)`,
-            top: `calc(${1.5 + 3 * block.start/60}vh - 1px)`,
-            right: '10%'
+            top: `calc(${1.5 + 3 * block.start/60}vh - 1px)`
         }}>
-            {block.name}
-            <div 
-                style={{position:"absolute", right:"0px", top:"0px"}}
+            <h4>{block.name}</h4>
+            <h4 
+                style={{position:"absolute", right:"0.25rem", top:"0px", cursor:"pointer"}}
                 onClick={() => deleteBlock(block.start)}
-            >del</div>
+            >—</h4>
         </div>
     )
 
@@ -102,10 +95,10 @@ function BlockCreator({blocks, addBlock}) {
 
     return(
         <div className="blockCreator">
-            {creating && <BlockInfo blocks = {blocks} addBlock={addBlock} setCreating={setCreating}/>}
             <div className="blockButton" onClick={() => setCreating(true)}>
-
+                <h1>+</h1>
             </div>
+            {creating && <BlockInfo blocks = {blocks} addBlock={addBlock} setCreating={setCreating}/>}
         </div>
     )
 }
@@ -127,7 +120,9 @@ function BlockInfo({blocks, addBlock, setCreating}) {
     function isValid(title, start, end) {
         let v = true
         blocks.forEach((block) => {
-            if (end >= block.start && end <= block.end) {
+            if (start == null || end == null || title == "") {
+                v = false
+            } else if (end >= block.start && end <= block.end) {
                 v = false
             } else if (start >= block.start && start <= block.end) {
                 v = false
@@ -185,7 +180,7 @@ function BlockInfo({blocks, addBlock, setCreating}) {
                 
             </div>
             {valid == false && <div className="blockForm">
-                <h1>Overlapping Times!</h1>
+                <h1>Invalid Entry or Overlapping Times!</h1>
                 <h2>Try again.</h2>
                 <button onClick = {() => {setValid(null); setCreating(false)}}>OK</button>
             </div>}

@@ -1,5 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Megrim&display=swap');
+
+:root {
+    --title-font: 'Megrim', serif;
+    --text-font: 'Jura', sans-serif;
+
+    --light-1: #F5E6E8;
+    --light-2: #D5C6E0;
+    --medium: #AAA1C8;
+    --dark-1: #967AA1;
+    --dark-2: #192A51;
+
+    --border-rad: .5rem;
+
+    --hover-time: 0.25s;
+}
+
 * {
-  margin: 0px;
-  padding: 0px;
-  font-family: sans-serif
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: var(--light-1);
 }

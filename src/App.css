@@ -16,6 +16,8 @@
   height: 15vh;
   display: flex;
   align-items: center;
+  font-family: var(--title-font);
+  font-size: 3rem;
 }
 
 .currencyBar {
@@ -25,4 +27,6 @@
   right: 5vw;
   width: 5vw;
   text-align: right;
+  font-family: var(--text-font);
+  font-size: 1.5rem;
 }
