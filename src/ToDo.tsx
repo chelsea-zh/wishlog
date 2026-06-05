@@ -4,7 +4,7 @@ import './ToDo.css'
 // task = {reward: 100, goal: "string", claimed: false}
 
 
-export default function ToDo() {
+export default function ToDo({changeGems}) {
     const [daily, setDaily] = useState(true);
     const [dailyTasks, setDailyTasks] = useState([
         {reward: 100, goal: "testiad ad;lkfj sdf a sdflk; slf d fsdfng", claimed: false},
@@ -35,6 +35,10 @@ export default function ToDo() {
                     : task
                 )
             )
+            let task = dailyTasks.find(block => block.goal == goal)
+            if (task.claimed==false) {
+                changeGems(task.reward)
+            }
         } else {
             setCustomTasks(customTasks =>
                 customTasks.map(task => 
@@ -43,6 +47,10 @@ export default function ToDo() {
                     : task
                 )
             )
+            let task = customTasks.find(block => block.goal == goal)
+            if (task.claimed==false) {
+                changeGems(task.reward)
+            }
         }
     }
 

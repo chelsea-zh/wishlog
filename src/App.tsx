@@ -4,30 +4,45 @@ import Schedule from './Schedule';
 import './App.css'
 
 function Title() {
-  return(
-    <div className='title'>
-      <h1>Wishlog</h1>
-    </div>
-  )
+    return (
+        <div className='title'>
+            <h1>Wishlog</h1>
+        </div>
+    )
 }
 
 function Sidebar() {
-  return(
-    <div className='sidebar'>
-      <h1>Sidebar</h1>
-    </div>
-  )
+    return (
+        <div className='sidebar'>
+            <h1>Sidebar</h1>
+        </div>
+    )
+}
+
+function CurrencyBar({gems}) {
+    return (
+        <div className='currencyBar'>
+            {gems}
+        </div>
+    )
 }
 
 function App() {
-  return (
-    <div>
-      <Sidebar />
-      <Title />
-      <Schedule />
-      <ToDo />
-    </div>
-  );
+    let [gems, setGems] = useState(0)
+
+    function changeGems(x) {
+        setGems(gems + x)
+    }
+
+    return (
+        <div>
+            <CurrencyBar gems={gems}/>
+            <Sidebar />
+            <Title />
+            <Schedule />
+            <ToDo changeGems={changeGems}/>
+        </div>
+    );
 }
 
 export default App

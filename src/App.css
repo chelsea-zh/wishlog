@@ -18,3 +18,11 @@
   align-items: center;
 }
 
+.currencyBar {
+  background-color: mediumpurple;
+  position: absolute;
+  top: 5vh;
+  right: 5vw;
+  width: 5vw;
+  text-align: right;
+}
