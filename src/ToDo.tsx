@@ -11,6 +11,15 @@ export default function ToDo({changeGems}: {changeGems: (gems: number) => void})
         {reward: 100, goal: "testiad ad;lkfj sdf a sdflk; slf d fsdfng", claimed: false},
         {reward: 200, goal: "other test", claimed: false},
         {reward: 100, goal: "test 3", claimed: false},
+        {reward: 200, goal: "test 4", claimed: false},
+        {reward: 200, goal: "other test", claimed: false},
+        {reward: 100, goal: "test 3", claimed: false},
+        {reward: 200, goal: "test 4", claimed: false},
+        {reward: 200, goal: "other test", claimed: false},
+        {reward: 100, goal: "test 3", claimed: false},
+        {reward: 200, goal: "test 4", claimed: false},
+        {reward: 200, goal: "other test", claimed: false},
+        {reward: 100, goal: "test 3", claimed: false},
         {reward: 200, goal: "test 4", claimed: false}
     ]);
     const [customTasks, setCustomTasks] = useState<Task[]>([]);
@@ -85,15 +94,17 @@ export default function ToDo({changeGems}: {changeGems: (gems: number) => void})
                     claimTask={claimTask}
                     addTask={addTask}/>
             )}
-            <ToDoSelector onClick={changeDaily}/>
-            <ToDoSelector onClick={changeCustom}/>
+            <ToDoSelector onClick={changeDaily} daily={daily}/>
+            <ToDoSelector onClick={changeCustom} daily={!daily}/>
         </div>
     )
 }
 
-function ToDoSelector({onClick}: {onClick: () => void}) {
+function ToDoSelector({onClick, daily}: {onClick: () => void, daily: boolean}) {
     return(
-        <div className="sel" onClick={onClick}>
+        <div className="sel" onClick={onClick} style={
+            daily ? {backgroundColor:"var(--light-2)"} : {backgroundColor:"var(--medium)"}
+        }>
             <h1>s</h1>
         </div>
     )
@@ -223,11 +234,11 @@ function TaskCreator({addTask}: {addTask: (task: Task) => void}) {
                     value={goal} 
                     onChange={(e) => setGoal(e.target.value)}
                 />
+                <button type="button" onClick={() =>
+                    {addTask({reward:Number(reward), goal:goal, claimed:false});
+                    setReward(""); setGoal("")}
+                }>Add</button>
             </form>
-            <button onClick={() =>
-                {addTask({reward:Number(reward), goal:goal, claimed:false});
-                setReward(""); setGoal("")}
-            }>Add</button>
         </div>
     )
 }

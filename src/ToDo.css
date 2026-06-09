@@ -1,5 +1,5 @@
 .todo {
-    background-color: red;
+    /* background-color: red; */
     position: absolute;
     left: 40vw;
     bottom: 5vh;
@@ -8,6 +8,7 @@
     display: grid;
     grid-template-columns: 9fr 1fr;
     grid-template-rows: 1fr 1fr;
+    border-radius: var(--border-rad);
 }
 
 .sel {
@@ -15,19 +16,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 0px var(--border-rad) var(--border-rad) 0px;
 }
 
-.dailies {
-    background-color: coral;
+.dailies, .custom {
+    background-color: var(--light-2);
     grid-row: 1 / span 2;
+    border-radius: var(--border-rad) 0px 0px var(--border-rad);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 8fr;
 }
 
-.custom {
-    background-color: goldenrod;
-    grid-row: 1 / span 2;
+.tasklist {
+    display: flex;
+    flex-direction: column;
+    height:95%;
+    overflow-y: scroll;
+    scrollbar-color: var(--dark-2) var(--medium);
+    direction: rtl;
 }
 
-.tasklist,
 .unclaimed,
 .claimed {
     display: flex;
@@ -39,25 +48,36 @@
 }
 
 .task {
-    background-color: azure;
+    /* background-color: azure; */
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr;
+    grid-template-columns: 1fr 4fr 1fr 1fr;
     align-items: center;
 }
 
-.taskCreator {
-    background-color: chocolate;
-    display: grid;
-    grid-template-columns: 4fr 2fr;
-    align-items: center;
+.task, .taskCreator {
+    background-color: var(--medium);
+    border-radius: var(--border-rad);
+    width: 90%;
+    margin: .5em 5% .5em 5%;
+    box-sizing: border-box;
+    padding: .5em;
 }
 
 .taskCreator form {
+    background-color: chocolate;
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 4fr 2fr;
+    align-items: center;
 }
 
 .taskCreator input {
     width: 100%;
     height: 2.5em;
+}
+
+.tasklist button {
+    cursor: pointer;
+    width: 90%;
+    height: calc(100% - .5em);
+    margin: .25em 5% .25em 5%;
 }

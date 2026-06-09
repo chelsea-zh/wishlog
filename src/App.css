@@ -8,7 +8,7 @@
 }
 
 .title {
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
   position: absolute;
   left: 40vw;
   top: 5vh;
@@ -21,7 +21,8 @@
 }
 
 .currencyBar {
-  background-color: mediumpurple;
+  background-color: var(--dark-1);
+  border-radius: var(--border-rad);
   position: absolute;
   top: 5vh;
   right: 5vw;
