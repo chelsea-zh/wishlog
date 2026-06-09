@@ -3,16 +3,17 @@ import './ToDo.css'
 
 // task = {reward: 100, goal: "string", claimed: false}
 
+type Task = {reward: number, goal: string, claimed: boolean}
 
-export default function ToDo({changeGems}) {
-    const [daily, setDaily] = useState(true);
-    const [dailyTasks, setDailyTasks] = useState([
+export default function ToDo({changeGems}: {changeGems: (gems: number) => void}) {
+    const [daily, setDaily] = useState<boolean>(true);
+    const [dailyTasks, setDailyTasks] = useState<Task[]>([
         {reward: 100, goal: "testiad ad;lkfj sdf a sdflk; slf d fsdfng", claimed: false},
         {reward: 200, goal: "other test", claimed: false},
         {reward: 100, goal: "test 3", claimed: false},
         {reward: 200, goal: "test 4", claimed: false}
     ]);
-    const [customTasks, setCustomTasks] = useState([]);
+    const [customTasks, setCustomTasks] = useState<Task[]>([]);
 
     function deleteTask(goal: string) {
         if (daily) {
@@ -35,26 +36,26 @@ export default function ToDo({changeGems}) {
                     : task
                 )
             )
-            let task = dailyTasks.find(block => block.goal == goal)
+            let task = dailyTasks.find(block => block.goal == goal)!
             if (task.claimed==false) {
                 changeGems(task.reward)
             }
         } else {
             setCustomTasks(customTasks =>
-                customTasks.map(task => 
+                customTasks.map(task =>
                     task.goal === goal
-                    ? {...task, claimed: true}
-                    : task
+                        ? { ...task, claimed: true }
+                        : task
                 )
             )
-            let task = customTasks.find(block => block.goal == goal)
-            if (task.claimed==false) {
+            let task = customTasks.find(block => block.goal == goal)!
+            if (task.claimed == false) {
                 changeGems(task.reward)
             }
         }
     }
 
-    function addTask(task) {
+    function addTask(task: Task) {
         if (daily) {
             setDailyTasks(dailyTasks => [...dailyTasks, task])
         } else {
@@ -71,8 +72,6 @@ export default function ToDo({changeGems}) {
 
     return(
         <div className = "todo">
-            {/*use cssgrid with bottom block on left, selector on right ->
-            just have them as onclick divs lmao too lazy*/}
             {daily ? (
                 <Dailies 
                     dailyTasks={dailyTasks} 
@@ -92,7 +91,7 @@ export default function ToDo({changeGems}) {
     )
 }
 
-function ToDoSelector({onClick}) {
+function ToDoSelector({onClick}: {onClick: () => void}) {
     return(
         <div className="sel" onClick={onClick}>
             <h1>s</h1>
@@ -100,7 +99,9 @@ function ToDoSelector({onClick}) {
     )
 }
 
-function Dailies({dailyTasks, deleteTask, claimTask, addTask}) {
+function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
+    {dailyTasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void, addTask: (task: Task) => void}
+) {
     return(
         <div className="dailies">
             <h1>dailies</h1>
@@ -113,7 +114,9 @@ function Dailies({dailyTasks, deleteTask, claimTask, addTask}) {
     )
 }
 
-function Custom({customTasks, deleteTask, claimTask, addTask}) {
+function Custom({customTasks, deleteTask, claimTask, addTask}:
+    {customTasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void, addTask: (task: Task) => void}
+) {
     return(
         <div className="custom">
             <h1>Custom</h1>
@@ -126,7 +129,9 @@ function Custom({customTasks, deleteTask, claimTask, addTask}) {
     )
 }
 
-function TaskList({tasks, deleteTask, claimTask, addTask}) {
+function TaskList({tasks, deleteTask, claimTask, addTask}:
+    {tasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void, addTask: (task: Task) => void}
+) {
     return(
         <div className='tasklist'>
             <UnclaimedTasks 
@@ -142,8 +147,10 @@ function TaskList({tasks, deleteTask, claimTask, addTask}) {
     )
 }
 
-function UnclaimedTasks({tasks, deleteTask, claimTask}) {
-    let tasklist = [];
+function UnclaimedTasks({tasks, deleteTask, claimTask}:
+    {tasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void}
+) {
+    let tasklist:React.ReactNode[] = [];
     tasks.forEach((t) => {
         if (!t.claimed) {
             tasklist.push(
@@ -162,8 +169,10 @@ function UnclaimedTasks({tasks, deleteTask, claimTask}) {
     )
 }
 
-function ClaimedTasks({tasks, deleteTask, claimTask}) {
-    let tasklist = [];
+function ClaimedTasks({tasks, deleteTask, claimTask}:
+    {tasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void}
+) {
+    let tasklist:React.ReactNode[] = [];
     tasks.forEach((t) => {
         if (t.claimed) {
             tasklist.push(
@@ -182,7 +191,9 @@ function ClaimedTasks({tasks, deleteTask, claimTask}) {
     )
 }
 
-function Task({task, deleteTask, claimTask}) {
+function Task({task, deleteTask, claimTask}:
+    {task: Task, deleteTask: (goal: string) => void, claimTask: (goal: string) => void}
+) {
     return(
         <div className="task">
             <h1> {task.reward} </h1>
@@ -193,9 +204,9 @@ function Task({task, deleteTask, claimTask}) {
     )
 }
 
-function TaskCreator({addTask}) {
-    const [reward, setReward] = useState("")
-    const [goal, setGoal] = useState("")
+function TaskCreator({addTask}: {addTask: (task: Task) => void}) {
+    const [reward, setReward] = useState<number | "">("")
+    const [goal, setGoal] = useState<string>("")
 
     return(
         <div className='taskCreator'>
@@ -204,7 +215,7 @@ function TaskCreator({addTask}) {
                     type="number" 
                     placeholder="100" 
                     value={reward} 
-                    onChange={(e) => setReward(e.target.value)}
+                    onChange={(e) => setReward(Number(e.target.value))}
                 />
                 <input 
                     type="text" 

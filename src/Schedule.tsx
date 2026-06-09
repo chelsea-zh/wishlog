@@ -1,18 +1,22 @@
 import { useState } from "react"
 import './Schedule.css'
 
+
+type Block = {id: number, name: string, start: number, end: number}
+
 export default function Schedule() {
-    const [blocks, setBlocks] = useState([
+
+    const [blocks, setBlocks] = useState<Block[]>([
         {id:1, name: "string", start: 480, end: 540},
         {id:1, name: "string", start: 3*60, end: 300},
         {id:1, name: "string", start: 15*60, end: 19*60}
     ])
 
-    function addBlock(block){
+    function addBlock(block: Block){
         setBlocks(blocks => [...blocks, block])
     }
 
-    function deleteBlock(start){
+    function deleteBlock(start: number){
         setBlocks(blocks =>
             blocks.filter(block => block.start != start)
         )
@@ -68,7 +72,7 @@ function Hourline(hour:number) {
     )
 }
 
-function Blocks({blocks, deleteBlock}) {
+function Blocks({blocks, deleteBlock}:{blocks:Block[], deleteBlock: (start: number) => void}) {
 
     let events = blocks.map(block =>
         <div className="block" key={block.id} style={{
@@ -90,8 +94,8 @@ function Blocks({blocks, deleteBlock}) {
     )
 }
 
-function BlockCreator({blocks, addBlock}) {
-    const [creating, setCreating] = useState(false)
+function BlockCreator({blocks, addBlock}:{blocks:Block[], addBlock: (block: Block) => void}) {
+    const [creating, setCreating] = useState<boolean>(false)
 
     return(
         <div className="blockCreator">
@@ -103,11 +107,13 @@ function BlockCreator({blocks, addBlock}) {
     )
 }
 
-function BlockInfo({blocks, addBlock, setCreating}) {
+function BlockInfo({blocks, addBlock, setCreating}
+    :{blocks:Block[], addBlock: (block: Block) => void, setCreating: (creating: boolean) => void}
+) {
     const [title, setTitle] = useState<string>("")
-    const [start, setStart] = useState<number>()
-    const [end, setEnd] = useState<number>()
-    const [valid, setValid] = useState<boolean>()
+    const [start, setStart] = useState<number>(0)
+    const [end, setEnd] = useState<number>(0)
+    const [valid, setValid] = useState<boolean | null>()
 
     function toMin(time:string) {
         return(Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]))
@@ -117,7 +123,7 @@ function BlockInfo({blocks, addBlock, setCreating}) {
         return(String(Math.trunc(min / 60)).padStart(2, "0") + ":" + String(min % 60).padStart(2, "0"))
     }
 
-    function isValid(title, start, end) {
+    function isValid(title:string, start:number, end:number) {
         let v = true
         blocks.forEach((block) => {
             if (start == null || end == null || title == "") {
@@ -171,10 +177,10 @@ function BlockInfo({blocks, addBlock, setCreating}) {
                 <div>
                     <button onClick = {() =>
                         {isValid(title, start, end);
-                        setTitle(""); setStart(null); setEnd(null)}
+                        setTitle(""); setStart(0); setEnd(0)}
                     }>Submit</button>
                     <button onClick = {() =>
-                        {setTitle(""); setStart(null); setEnd(null); setCreating(false)}
+                        {setTitle(""); setStart(0); setEnd(0); setCreating(false)}
                     }>Cancel</button>
                 </div>
                 

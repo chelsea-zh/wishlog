@@ -19,7 +19,7 @@ function Sidebar() {
     )
 }
 
-function CurrencyBar({gems}) {
+function CurrencyBar({gems}:{gems: number}) {
     return (
         <div className='currencyBar'>
             {gems}
@@ -28,9 +28,9 @@ function CurrencyBar({gems}) {
 }
 
 function App() {
-    let [gems, setGems] = useState(0)
+    let [gems, setGems] = useState<number>(0)
 
-    function changeGems(x) {
+    function changeGems(x: number) {
         setGems(gems + x)
     }
 
