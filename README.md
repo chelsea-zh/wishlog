@@ -9,3 +9,5 @@ Current, unstyled but usable state:
 ![unstyled wishlog site](src/assets/wishlog1.png)
 
 Demo on Vercel: https://wishlog-gules.vercel.app/ :D
+
+No AI was used.

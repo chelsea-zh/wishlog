@@ -34,7 +34,7 @@
     height:95%;
     overflow-y: scroll;
     scrollbar-color: var(--dark-2) var(--medium);
-    direction: rtl;
+    /* direction: rtl; */
 }
 
 .unclaimed,
