@@ -115,7 +115,7 @@ function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
 ) {
     return(
         <div className="dailies">
-            <h1>dailies</h1>
+            <h1>Dailies</h1>
             <TaskList 
                 tasks = {dailyTasks} 
                 deleteTask={deleteTask}  
@@ -228,17 +228,21 @@ function TaskCreator({addTask}: {addTask: (task: Task) => void}) {
                     value={reward} 
                     onChange={(e) => setReward(Number(e.target.value))}
                 />
+            </form>
+            <form>
                 <input 
                     type="text" 
                     placeholder='New task here!' 
                     value={goal} 
                     onChange={(e) => setGoal(e.target.value)}
                 />
+            </form>
+            {/* <form> */}
                 <button type="button" onClick={() =>
                     {addTask({reward:Number(reward), goal:goal, claimed:false});
                     setReward(""); setGoal("")}
                 }>Add</button>
-            </form>
+            {/* </form> */}
         </div>
     )
 }

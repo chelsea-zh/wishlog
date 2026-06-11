@@ -26,8 +26,11 @@
   position: absolute;
   top: 5vh;
   right: 5vw;
-  width: 5vw;
+  width: fit-content;
+  height: fit-content;
   text-align: right;
   font-family: var(--text-font);
   font-size: 1.5rem;
+  box-sizing: border-box;
+  padding: 0.25rem 0.5rem;
 }
