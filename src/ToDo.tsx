@@ -3,72 +3,72 @@ import './ToDo.css'
 
 // task = {reward: 100, goal: "string", claimed: false}
 
-type Task = {reward: number, goal: string, claimed: boolean}
+type Task = {id: number, reward: number, goal: string, claimed: boolean}
 
 export default function ToDo({changeGems}: {changeGems: (gems: number) => void}) {
     const [daily, setDaily] = useState<boolean>(true);
     const [dailyTasks, setDailyTasks] = useState<Task[]>([
-        {reward: 100, goal: "testiad ad;lkfj sdf a sdflk; slf d fsdfng", claimed: false},
-        {reward: 200, goal: "other test", claimed: false},
-        {reward: 100, goal: "test 3", claimed: false},
-        {reward: 200, goal: "test 4", claimed: false},
-        {reward: 200, goal: "other test", claimed: false},
-        {reward: 100, goal: "test 3", claimed: false},
-        {reward: 200, goal: "test 4", claimed: false},
-        {reward: 200, goal: "other test", claimed: false},
-        {reward: 100, goal: "test 3", claimed: false},
-        {reward: 200, goal: "test 4", claimed: false},
-        {reward: 200, goal: "other test", claimed: false},
-        {reward: 100, goal: "test 3", claimed: false},
-        {reward: 200, goal: "test 4", claimed: false}
+        {id: 1, reward: 100, goal: "testiad ad;lkfj sdf a sdflk; slf d fsdfng", claimed: false},
+        {id: 2, reward: 200, goal: "other test", claimed: false},
+        {id: 3, reward: 100, goal: "test 3", claimed: false},
+        {id: 4, reward: 200, goal: "test 4", claimed: false},
+        {id: 5, reward: 200, goal: "other test", claimed: false},
+        {id: 6, reward: 100, goal: "test 3", claimed: false},
+        {id: 7, reward: 200, goal: "test 4", claimed: false},
+        {id: 8, reward: 200, goal: "other test", claimed: false},
+        {id: 9, reward: 100, goal: "test 3", claimed: false},
+        {id: 10, reward: 200, goal: "test 4", claimed: false},
+        {id: 11, reward: 200, goal: "other test", claimed: false},
+        {id: 12, reward: 100, goal: "test 3", claimed: false},
+        {id: 13, reward: 200, goal: "test 4", claimed: false}
     ]);
     const [customTasks, setCustomTasks] = useState<Task[]>([]);
 
-    function deleteTask(goal: string) {
+    function deleteTask(id: number) {
         if (daily) {
             setDailyTasks(dailyTasks =>
-                dailyTasks.filter(task => task.goal != goal)
+                dailyTasks.filter(task => task.id != id)
             )
         } else {
             setCustomTasks(customTasks =>
-                customTasks.filter(task => task.goal != goal)
+                customTasks.filter(task => task.id != id)
             )
         }
     }
 
-    function claimTask(goal: string) {
+    function claimTask(id: number) {
         if (daily) {
             setDailyTasks(dailyTasks =>
                 dailyTasks.map(task => 
-                    task.goal === goal
+                    task.id === id
                     ? {...task, claimed: true}
                     : task
                 )
             )
-            let task = dailyTasks.find(block => block.goal == goal)!
+            let task = dailyTasks.find(block => block.id == id)!
             if (task.claimed==false) {
                 changeGems(task.reward)
             }
         } else {
             setCustomTasks(customTasks =>
                 customTasks.map(task =>
-                    task.goal === goal
+                    task.id === id
                         ? { ...task, claimed: true }
                         : task
                 )
             )
-            let task = customTasks.find(block => block.goal == goal)!
+            let task = customTasks.find(block => block.id == id)!
             if (task.claimed == false) {
                 changeGems(task.reward)
             }
         }
     }
 
-    function addTask(task: Task) {
+    function addTask(task: {reward: number, goal: string, claimed: boolean}) {
         if (daily) {
-            setDailyTasks(dailyTasks => [...dailyTasks, task])
+            setDailyTasks(dailyTasks => [...dailyTasks, {...task, id: dailyTasks.length + 1}])
         } else {
-            setCustomTasks(customTasks => [...customTasks, task])
+            setCustomTasks(customTasks => [...customTasks, {...task, id: customTasks.length + 1}])
         }
     }
 
@@ -111,7 +111,7 @@ function ToDoSelector({onClick, daily}: {onClick: () => void, daily: boolean}) {
 }
 
 function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
-    {dailyTasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void, addTask: (task: Task) => void}
+    {dailyTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: Task) => void}
 ) {
     return(
         <div className="dailies">
@@ -126,7 +126,7 @@ function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
 }
 
 function Custom({customTasks, deleteTask, claimTask, addTask}:
-    {customTasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void, addTask: (task: Task) => void}
+    {customTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: Task) => void}
 ) {
     return(
         <div className="custom">
@@ -141,7 +141,7 @@ function Custom({customTasks, deleteTask, claimTask, addTask}:
 }
 
 function TaskList({tasks, deleteTask, claimTask, addTask}:
-    {tasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void, addTask: (task: Task) => void}
+    {tasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: Task) => void}
 ) {
     return(
         <div className='tasklist'>
@@ -159,7 +159,7 @@ function TaskList({tasks, deleteTask, claimTask, addTask}:
 }
 
 function UnclaimedTasks({tasks, deleteTask, claimTask}:
-    {tasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void}
+    {tasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void}
 ) {
     let tasklist:React.ReactNode[] = [];
     tasks.forEach((t) => {
@@ -181,7 +181,7 @@ function UnclaimedTasks({tasks, deleteTask, claimTask}:
 }
 
 function ClaimedTasks({tasks, deleteTask, claimTask}:
-    {tasks: Task[], deleteTask: (goal: string) => void, claimTask: (goal: string) => void}
+    {tasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void}
 ) {
     let tasklist:React.ReactNode[] = [];
     tasks.forEach((t) => {
@@ -203,19 +203,19 @@ function ClaimedTasks({tasks, deleteTask, claimTask}:
 }
 
 function Task({task, deleteTask, claimTask}:
-    {task: Task, deleteTask: (goal: string) => void, claimTask: (goal: string) => void}
+    {task: Task, deleteTask: (id: number) => void, claimTask: (id: number) => void}
 ) {
     return(
         <div className="task">
             <h1> {task.reward} </h1>
             <h1> {task.goal} </h1>
-            <button onClick={() => claimTask(task.goal)}> claim </button>
-            <button onClick={() => deleteTask(task.goal)}> delete </button>
+            <button onClick={() => claimTask(task.id)}> claim </button>
+            <button onClick={() => deleteTask(task.id)}> delete </button>
         </div>
     )
 }
 
-function TaskCreator({addTask}: {addTask: (task: Task) => void}) {
+function TaskCreator({addTask}: {addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}) {
     const [reward, setReward] = useState<number | "">("")
     const [goal, setGoal] = useState<string>("")
 
