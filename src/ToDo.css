@@ -54,7 +54,7 @@
 }
 
 .tasklist::-webkit-scrollbar-track {
-    background-color: var(--light-2);
+    background-color: var(--light-);
 }
 
 .tasklist::-webkit-scrollbar-thumb {
@@ -73,7 +73,16 @@
 }
 
 .claimed .task {
-    background-color: beige;
+    background-color: var(--dark-1);
+}
+
+.claimed .task h1:nth-child(2) {
+    text-decoration: line-through;
+}
+
+.claimed .task button:nth-child(3) {
+    color: var(--dark-1);
+    cursor: default;
 }
 
 .task {
@@ -93,7 +102,7 @@
     /* padding: .5em; */
 }
 
-.task:nth-child(1) {
+.unclaimed .task:nth-child(1) {
     margin-top: 0px;
 }
 

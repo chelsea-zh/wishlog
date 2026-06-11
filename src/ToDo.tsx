@@ -225,6 +225,8 @@ function TaskCreator({addTask}: {addTask: (task: Task) => void}) {
                 <input 
                     type="number" 
                     placeholder="100" 
+                    step='50'
+                    min={0}
                     value={reward} 
                     onChange={(e) => setReward(Number(e.target.value))}
                 />
