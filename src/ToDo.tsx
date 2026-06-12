@@ -111,7 +111,7 @@ function ToDoSelector({onClick, daily}: {onClick: () => void, daily: boolean}) {
 }
 
 function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
-    {dailyTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: Task) => void}
+    {dailyTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}
 ) {
     return(
         <div className="dailies">
@@ -126,7 +126,7 @@ function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
 }
 
 function Custom({customTasks, deleteTask, claimTask, addTask}:
-    {customTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: Task) => void}
+    {customTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}
 ) {
     return(
         <div className="custom">
@@ -141,7 +141,7 @@ function Custom({customTasks, deleteTask, claimTask, addTask}:
 }
 
 function TaskList({tasks, deleteTask, claimTask, addTask}:
-    {tasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: Task) => void}
+    {tasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}
 ) {
     return(
         <div className='tasklist'>
