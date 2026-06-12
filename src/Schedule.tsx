@@ -134,6 +134,8 @@ function BlockInfo({blocks, addBlock, setCreating}
                 v = false
             } else if (start <= block.start && end>= block.end) {
                 v = false
+            } else if (end >= start) {
+                v = false
             }
         })
 

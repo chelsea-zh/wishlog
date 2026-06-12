@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ToDo from './ToDo'
-import Schedule from './Schedule';
+import Schedule from './Schedule'
+import Alarm from './Alarm'
 import './App.css'
 
 function Title() {
@@ -11,10 +12,11 @@ function Title() {
     )
 }
 
-function Sidebar() {
+function Sidebar({setPage}:{setPage: React.Dispatch<React.SetStateAction<string>>}) {
     return (
         <div className='sidebar'>
-            <h1>Sidebar</h1>
+            <h1 onClick={() => setPage("main")}>main</h1>
+            <h1 onClick={() => setPage("alarm")}>alarm</h1>
         </div>
     )
 }
@@ -28,6 +30,7 @@ function CurrencyBar({gems}:{gems: number}) {
 }
 
 function App() {
+    let [page, setPage] = useState<string>("alarm")
     let [gems, setGems] = useState<number>(0)
 
     function changeGems(x: number) {
@@ -36,11 +39,18 @@ function App() {
 
     return (
         <div>
-            <CurrencyBar gems={gems}/>
-            <Sidebar />
-            <Title />
-            <Schedule />
-            <ToDo changeGems={changeGems}/>
+            <div hidden = {page === "alarm"}>
+                <CurrencyBar gems={gems} /> 
+            </div>
+            <Sidebar setPage={setPage}/>
+            <div hidden={page !== "main"}>
+                <Title />
+                <Schedule />
+                <ToDo changeGems={changeGems}/>
+            </div>
+            <div hidden = {page !== "alarm"}>
+                <Alarm />
+            </div>
         </div>
     );
 }

@@ -1,0 +1,35 @@
+.alarm {
+    background-color: cornflowerblue;
+    position: absolute;
+    left: 15vw;
+    top: 10vh;
+    width: 80vw;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+}
+
+.alarm div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.current, .next {
+    background-color: darkseagreen;
+    grid-column: 1 / span 3;
+}
+
+.start {
+    background-color: goldenrod;
+}
+
+.end {
+    background-color: burlywood;
+}
+
+.time {
+    background-color: mediumpurple;
+}

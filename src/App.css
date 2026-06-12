@@ -5,6 +5,8 @@
   top: 0vh;
   width: 10vw;
   height:100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
