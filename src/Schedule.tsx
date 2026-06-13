@@ -1,16 +1,10 @@
 import { useState } from "react"
 import './Schedule.css'
 
-
 type Block = {id: number, name: string, start: number, end: number}
 
-export default function Schedule() {
+export default function Schedule({blocks, setBlocks}:{blocks:Block[], setBlocks: React.Dispatch<React.SetStateAction<Block[]>>}) {
 
-    const [blocks, setBlocks] = useState<Block[]>([
-        {id:1, name: "string", start: 480, end: 540},
-        {id:1, name: "string", start: 3*60, end: 300},
-        {id:1, name: "string", start: 15*60, end: 19*60}
-    ])
 
     function addBlock(block: Block){
         setBlocks(blocks => [...blocks, block])
@@ -134,7 +128,7 @@ function BlockInfo({blocks, addBlock, setCreating}
                 v = false
             } else if (start <= block.start && end>= block.end) {
                 v = false
-            } else if (end >= start) {
+            } else if (end <= start) {
                 v = false
             }
         })
