@@ -3,7 +3,7 @@ import './Alarm.css'
 
 type Block = {id: number, name: string, start: number, end: number}
 
-export default function Alarm({blocks}) {
+export default function Alarm({blocks}:{blocks:Block[]}) {
     const [now, setNow] = useState<Date>(new Date())
 
     useEffect(() => {
@@ -16,20 +16,23 @@ export default function Alarm({blocks}) {
 
     })
 
-    let next:string
-    let current:Block
+    let next:string = ""
+    let current:Block = {id: -1, name:"empty", start:0, end:0}
     let started:boolean = false
 
     blocks.forEach(block => {
-        if (block.start <= toMinD(now)) {
+        if (block !== null && block.start <= toMinD(now)) {
             started = true
             if (block.end > toMinD(now)) {
                 current = block
+                if (block.start == toMinD(now) && now.getSeconds() == 1) {
+                    alert("start!")
+                }
             } else {
-                current = null
+                current = {id: -1, name:"empty", start:0, end:0}
             }
         }
-        if (block.start > toMinD(now)) {
+        if (block !== null && block.start > toMinD(now)) {
             if (started) {
                 next = "Next: " + block.name
                 started = false
@@ -40,7 +43,7 @@ export default function Alarm({blocks}) {
     if (started) {
         next = "Last task of the day!"
     }
-    if (started && current == null) {
+    if (started && current.id == -1) {
         next = "Done for the day!"
     }
 
@@ -51,7 +54,7 @@ export default function Alarm({blocks}) {
     let currE:string = ""
     let currN:string = ""
 
-    if (current == null) {
+    if (current.id == -1) {
         hrLeft = 0
         minLeft = 0
         secLeft = 0
@@ -67,14 +70,8 @@ export default function Alarm({blocks}) {
         currN = current.name
     }
 
-    let time: string = String(hrLeft) + ":" + String(minLeft).padStart(2, "0") + ":" + String(secLeft).padStart(2, "0")
-
-    if (hrLeft == 0) {
-        time = String(minLeft).padStart(2, "0") + ":" + String(secLeft).padStart(2, "0")
-    }
-
-    function toMin(time:string) {
-        return(Number(time.split(":")[0]) * 60 + Number(time.split(":")[1]))
+    if (hrLeft == 0 && minLeft == 0 && secLeft == 1) {
+        alert("end!")
     }
 
     function toHr(min:number) {

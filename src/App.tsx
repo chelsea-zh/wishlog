@@ -39,7 +39,6 @@ function App() {
     const [blocks, setBlocks] = useState<Block[]>([
         {id:1, name: "string", start: 480, end: 540},
         {id:1, name: "string", start: 3*60, end: 7*60},
-        {id:1, name: "testing", start: 13*60+53, end: 13*60+54},
         {id:1, name: "test", start: 15*60, end: 19*60}
     ])
 
