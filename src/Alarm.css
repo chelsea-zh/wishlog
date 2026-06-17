@@ -1,5 +1,5 @@
 .alarm {
-    background-color: cornflowerblue;
+    /* background-color: cornflowerblue; */
     position: absolute;
     left: 15vw;
     top: 10vh;
@@ -10,26 +10,37 @@
     grid-template-rows: 1fr 5fr 1fr;
 }
 
-.alarm div {
+.alarm div:not(.time) {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.current, .next {
-    background-color: darkseagreen;
+.current {
+    /* background-color: darkseagreen; */
     grid-column: 1 / span 3;
+    font-family: var(--title-font);
+    font-size: 2rem;
 }
 
-.start {
-    background-color: goldenrod;
+.next {
+    grid-column: 1 / span 3;
+    font-family: var(--text-font);
+    font-size: 1rem;
 }
 
-.end {
-    background-color: burlywood;
+.start, .end {
+    /* background-color: burlywood; */
+    font-family: var(--text-font);
 }
 
 .time {
-    background-color: mediumpurple;
+    /* background-color: mediumpurple; */
+    font-family: var(--title-font);
+    font-size: 6.5vw;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    display: grid;
+    place-items: center;
 }

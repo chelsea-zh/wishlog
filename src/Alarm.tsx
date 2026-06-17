@@ -16,7 +16,7 @@ export default function Alarm({blocks}) {
 
     })
 
-    let next:Block
+    let next:string
     let current:Block
     let started:boolean = false
 
@@ -31,14 +31,17 @@ export default function Alarm({blocks}) {
         }
         if (block.start > toMinD(now)) {
             if (started) {
-                next = block
+                next = "Next: " + block.name
                 started = false
             }
         }
     });
 
     if (started) {
-        next = {id: 0, name: "dw", start: 0, end: 0}
+        next = "Last task of the day!"
+    }
+    if (started && current == null) {
+        next = "Done for the day!"
     }
 
     let hrLeft:number = 0
@@ -56,12 +59,18 @@ export default function Alarm({blocks}) {
         currE = "00:00"
         currN = ""
     } else {
-        hrLeft = (current.end - toMinD(now) - 1) / 60
+        hrLeft = Math.trunc((current.end - toMinD(now) - 1) / 60)
         minLeft = (current.end - toMinD(now) - 1) % 60
         secLeft = 60 - now.getSeconds()
         currS = toHr(current.start)
         currE = toHr(current.end)
         currN = current.name
+    }
+
+    let time: string = String(hrLeft) + ":" + String(minLeft).padStart(2, "0") + ":" + String(secLeft).padStart(2, "0")
+
+    if (hrLeft == 0) {
+        time = String(minLeft).padStart(2, "0") + ":" + String(secLeft).padStart(2, "0")
     }
 
     function toMin(time:string) {
@@ -87,8 +96,18 @@ export default function Alarm({blocks}) {
                 <h1>{currS}</h1>
             </div>
 
-            <div className="time">
-                <h1>{String(hrLeft)}:{String(minLeft).padStart(2, "0")}:{String(secLeft).padStart(2, "0")}</h1>
+            <div className="time" style={{gridTemplateColumns:
+                hrLeft !== 0
+                ? (hrLeft > 9
+                    ? "5fr 1fr 5fr 1fr 5fr"
+                    : "2fr 1fr 4fr 1fr 4fr")
+                : "4fr 1fr 4fr"
+            }}>
+                {(hrLeft !== 0) && <h1>{String(hrLeft)}</h1>}
+                {(hrLeft !== 0) && <h1>:</h1>}
+                <h1>{String(minLeft).padStart(2, "0")}</h1>
+                <h1>:</h1>
+                <h1>{String(secLeft).padStart(2, "0")}</h1>
             </div>
 
             <div className="end">
@@ -97,7 +116,7 @@ export default function Alarm({blocks}) {
             </div>
 
             <div className="next">
-                <h1>Next: {next.name}</h1>
+                <h1>{next}</h1>
             </div>
         </div>
     )
