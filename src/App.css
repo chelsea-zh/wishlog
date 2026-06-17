@@ -1,5 +1,5 @@
 .sidebar {
-  background-color: darkolivegreen;
+  background-color: var(--dark-2);
   position:absolute;
   left: 0vw;
   top: 0vh;
@@ -7,6 +7,20 @@
   height:100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-family: var(--title-font);
+}
+
+.sidebar h1 {
+  cursor: pointer;
+  font-size: 2rem;
+  color: var(--light-1);
+  transition: color var(--hover-time);
+}
+
+.sidebar h1:hover {
+  color: var(--light-2);
 }
 
 .title {

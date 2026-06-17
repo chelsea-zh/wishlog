@@ -15,8 +15,8 @@ function Title() {
 function Sidebar({setPage}:{setPage: React.Dispatch<React.SetStateAction<string>>}) {
     return (
         <div className='sidebar'>
-            <h1 onClick={() => setPage("main")}>main</h1>
-            <h1 onClick={() => setPage("alarm")}>alarm</h1>
+            <h1 onClick={() => setPage("main")}>Home</h1>
+            <h1 onClick={() => setPage("alarm")}>Alarm</h1>
         </div>
     )
 }
