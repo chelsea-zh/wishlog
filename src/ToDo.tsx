@@ -193,6 +193,7 @@ function UnclaimedTasks({tasks, deleteTask, claimTask}:
         if (!t.claimed) {
             tasklist.push(
                 <Task 
+                    key={t.id}
                     task = {t} 
                     deleteTask={deleteTask} 
                     claimTask={claimTask}/>
@@ -215,6 +216,7 @@ function ClaimedTasks({tasks, deleteTask, claimTask}:
         if (t.claimed) {
             tasklist.push(
                 <Task 
+                    key={t.id}
                     task = {t} 
                     deleteTask={deleteTask} 
                     claimTask={claimTask}/>

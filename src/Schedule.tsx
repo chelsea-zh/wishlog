@@ -7,7 +7,9 @@ export default function Schedule({blocks, setBlocks}:{blocks:Block[], setBlocks:
 
 
     function addBlock(block: Block){
-        setBlocks(blocks => [...blocks, block])
+        let added = [...blocks, block]
+        let sorted = added.sort((a, b) => a.start - b.start)
+        setBlocks(sorted)
     }
 
     function deleteBlock(start: number){
@@ -59,7 +61,7 @@ function Timeline() {
 
 function Hourline(hour:number) {
     return(
-        <div className="hourline">
+        <div className="hourline" key={hour}>
             <h4>{hour}:00</h4>
             <hr/>
         </div>

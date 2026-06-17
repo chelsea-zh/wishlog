@@ -22,19 +22,26 @@ export default function Alarm({blocks, now}:{blocks:Block[], now:Date}) {
             }
         }
         if (block !== null && block.start > toMinD(now)) {
+            // console.log(started)
             if (started) {
                 next = "Next: " + block.name
                 started = false
+                // console.log("hi")
             }
         }
-    });
+        
+        // console.log(started)
 
-    if (started) {
-        next = "Last task of the day!"
-    }
-    if (started && current.id == -1) {
-        next = "Done for the day!"
-    }
+        if (started) {
+            next = "Last task of the day!"
+            // console.log("bye")
+            // next = ""
+        }
+        if (started && current.id == -1) {
+            next = "Done for the day!"
+            // next = ""
+        }
+    });
 
     let hrLeft:number = 0
     let minLeft:number = 0
