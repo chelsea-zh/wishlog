@@ -28,12 +28,26 @@
     grid-template-rows: 1fr 8fr;
 }
 
+.dailies span, .custom span {
+    height: fit-content;
+    align-self: center;
+}
+
 .dailies h1, .custom h1 {
     font-family: var(--title-font);
     padding-left: 5%;
     font-size: 2.5rem;
     height: fit-content;
+    display: inline;
     align-self: center;
+}
+
+.dailies h2, .custom h2 {
+    display: inline;
+    font-family: var(--text-font);
+    font-size: 1.5rem;
+    color: var(--dark-1);
+    padding-left: 1rem;
 }
 
 .tasklist {

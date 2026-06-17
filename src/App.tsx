@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ToDo from './ToDo'
 import Schedule from './Schedule'
 import Alarm from './Alarm'
@@ -42,6 +42,18 @@ function App() {
         {id:1, name: "test", start: 15*60, end: 19*60}
     ])
 
+    const [now, setNow] = useState<Date>(new Date())
+
+    useEffect(() => {
+        const interval = setInterval(
+            () => {setNow(new Date())},
+            1000
+        )
+
+        return () => clearInterval(interval)
+
+    })
+
     function changeGems(x: number) {
         setGems(gems + x)
     }
@@ -55,10 +67,10 @@ function App() {
             <div hidden={page !== "main"}>
                 <Title />
                 <Schedule blocks={blocks} setBlocks={setBlocks}/>
-                <ToDo changeGems={changeGems}/>
+                <ToDo changeGems={changeGems} now={now}/>
             </div>
             <div hidden = {page !== "alarm"}>
-                <Alarm blocks={blocks}/>
+                <Alarm blocks={blocks} now={now}/>
             </div>
         </div>
     );

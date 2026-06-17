@@ -5,7 +5,7 @@ import './ToDo.css'
 
 type Task = {id: number, reward: number, goal: string, claimed: boolean}
 
-export default function ToDo({changeGems}: {changeGems: (gems: number) => void}) {
+export default function ToDo({changeGems, now}: {changeGems: (gems: number) => void, now:Date}) {
     const [daily, setDaily] = useState<boolean>(true);
     const [dailyTasks, setDailyTasks] = useState<Task[]>([
         {id: 1, reward: 100, goal: "testiad ad;lkfj sdf a sdflk; slf d fsdfng", claimed: false},
@@ -23,6 +23,25 @@ export default function ToDo({changeGems}: {changeGems: (gems: number) => void})
         {id: 13, reward: 200, goal: "test 4", claimed: false}
     ]);
     const [customTasks, setCustomTasks] = useState<Task[]>([]);
+
+    let nextDay:Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+    let nextWeek:Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (7 - now.getDay()))
+
+    let dailyMs:number = nextDay.getTime() - now.getTime()
+    let weeklyMs:number = nextWeek.getTime() - now.getTime()
+
+    let dailyCd:string = 
+        "reset in " +
+        String(Math.trunc(dailyMs/1000/60/60)).padStart(2, "0") + ":" +
+        String(Math.trunc(dailyMs/1000/60%60)).padStart(2, "0") + ":" +
+        String(Math.trunc(dailyMs/1000%60)).padStart(2, "0")
+
+    let weeklyCd:string = 
+        "reset in " +
+        String(Math.trunc(weeklyMs/1000/60/60/24)).padStart(2, "0") + "d " +
+        String(Math.trunc(weeklyMs/1000/60/60%24)).padStart(2, "0") + ":" +
+        String(Math.trunc(weeklyMs/1000/60%60)).padStart(2, "0") + ":" +
+        String(Math.trunc(weeklyMs/1000%60)).padStart(2, "0")
 
     function deleteTask(id: number) {
         if (daily) {
@@ -86,13 +105,15 @@ export default function ToDo({changeGems}: {changeGems: (gems: number) => void})
                     dailyTasks={dailyTasks} 
                     deleteTask={deleteTask} 
                     claimTask={claimTask}
-                    addTask={addTask}/>
+                    addTask={addTask}
+                    dailyCd={dailyCd}/>
             ) : (
                 <Custom 
                     customTasks={customTasks} 
                     deleteTask={deleteTask} 
                     claimTask={claimTask}
-                    addTask={addTask}/>
+                    addTask={addTask}
+                    weeklyCd={weeklyCd}/>
             )}
             <ToDoSelector onClick={changeDaily} daily={daily}/>
             <ToDoSelector onClick={changeCustom} daily={!daily}/>
@@ -110,12 +131,15 @@ function ToDoSelector({onClick, daily}: {onClick: () => void, daily: boolean}) {
     )
 }
 
-function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
-    {dailyTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}
+function Dailies({dailyTasks, deleteTask, claimTask, addTask, dailyCd}:
+    {dailyTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void, dailyCd:string}
 ) {
     return(
         <div className="dailies">
+            <span>
             <h1>Dailies</h1>
+            <h2>{dailyCd}</h2>
+            </span>
             <TaskList 
                 tasks = {dailyTasks} 
                 deleteTask={deleteTask}  
@@ -125,12 +149,15 @@ function Dailies({dailyTasks, deleteTask, claimTask, addTask}:
     )
 }
 
-function Custom({customTasks, deleteTask, claimTask, addTask}:
-    {customTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}
+function Custom({customTasks, deleteTask, claimTask, addTask, weeklyCd}:
+    {customTasks: Task[], deleteTask: (id: number) => void, claimTask: (id: number) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void, weeklyCd:string}
 ) {
     return(
         <div className="custom">
+            <span>
             <h1>Custom</h1>
+            <h2>{weeklyCd}</h2>
+            </span>
             <TaskList 
                 tasks = {customTasks} 
                 deleteTask={deleteTask} 

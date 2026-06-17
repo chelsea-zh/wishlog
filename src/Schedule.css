@@ -69,6 +69,7 @@
 
 .block h4 {
     padding: 0.1rem;
+    padding-left: 0.25rem;
     font-family: var(--text-font);
     font-size: 1rem;
 }

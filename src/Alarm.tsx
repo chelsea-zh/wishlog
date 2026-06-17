@@ -1,20 +1,9 @@
-import { useState, useEffect } from "react";
+// import { useState } from "react";
 import './Alarm.css'
 
 type Block = {id: number, name: string, start: number, end: number}
 
-export default function Alarm({blocks}:{blocks:Block[]}) {
-    const [now, setNow] = useState<Date>(new Date())
-
-    useEffect(() => {
-        const interval = setInterval(
-            () => {setNow(new Date())},
-            1000
-        )
-
-        return () => clearInterval(interval)
-
-    })
+export default function Alarm({blocks, now}:{blocks:Block[], now:Date}) {
 
     let next:string = ""
     let current:Block = {id: -1, name:"empty", start:0, end:0}
