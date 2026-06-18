@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useEffect, useRef } from "react";
 import './Alarm.css'
 
 type Block = {id: number, name: string, start: number, end: number}
@@ -7,41 +7,40 @@ export default function Alarm({blocks, now}:{blocks:Block[], now:Date}) {
 
     let next:string = ""
     let current:Block = {id: -1, name:"empty", start:0, end:0}
-    let started:boolean = false
 
-    blocks.forEach(block => {
-        if (block !== null && block.start <= toMinD(now)) {
-            started = true
-            if (block.end > toMinD(now)) {
-                current = block
-                if (block.start == toMinD(now) && now.getSeconds() == 1) {
-                    alert("start!")
-                }
-            } else {
-                current = {id: -1, name:"empty", start:0, end:0}
-            }
+    current = 
+        blocks.find(
+            block => block.start <= toMinD(now) && block.end > toMinD(now)
+        ) ?? {id: -1, name:"empty", start:0, end:0}
+
+    let nextB:Block = blocks.find(block => block.start > toMinD(now)) ?? {id: -1, name:"empty", start:0, end:0}
+    if (nextB.id != -1) {
+        next = "Upcoming: " + nextB.name
+    } else {
+        if (current.id != -1) {
+            next = "Last task of the day!"
+        } else {
+            next = "Done for the day!"
         }
-        if (block !== null && block.start > toMinD(now)) {
-            // console.log(started)
-            if (started) {
-                next = "Next: " + block.name
-                started = false
-                // console.log("hi")
+    }
+
+    const prevBlock = useRef(current.id)
+    const prevBlockName = useRef(current.name)
+
+    useEffect(() => {
+        if (prevBlock.current != current.id) {
+            if (prevBlock.current == -1) {
+                alert("start " + current.name)
+            } else if (prevBlock.current != -1 && current.id != -1) {
+                alert("stop " + prevBlockName.current + " and start " + current.name)
+            } else {
+                alert("stop " + prevBlockName.current)
             }
         }
         
-        // console.log(started)
-
-        if (started) {
-            next = "Last task of the day!"
-            // console.log("bye")
-            // next = ""
-        }
-        if (started && current.id == -1) {
-            next = "Done for the day!"
-            // next = ""
-        }
-    });
+        prevBlock.current = current.id
+        prevBlockName.current = current.name
+    }, [current.id])
 
     let hrLeft:number = 0
     let minLeft:number = 0
@@ -66,9 +65,9 @@ export default function Alarm({blocks, now}:{blocks:Block[], now:Date}) {
         currN = current.name
     }
 
-    if (hrLeft == 0 && minLeft == 0 && secLeft == 1) {
-        alert("end!")
-    }
+    // if (hrLeft == 0 && minLeft == 0 && secLeft == 1) {
+    //     alert("end!")
+    // }
 
     function toHr(min:number) {
         return(String(Math.trunc(min / 60)).padStart(2, "0") + ":" + String(min % 60).padStart(2, "0"))

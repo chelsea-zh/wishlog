@@ -124,11 +124,11 @@ function BlockInfo({blocks, addBlock, setCreating}
         blocks.forEach((block) => {
             if (start == null || end == null || title == "") {
                 v = false
-            } else if (end >= block.start && end <= block.end) {
+            } else if (end > block.start && end <= block.end) {
                 v = false
-            } else if (start >= block.start && start <= block.end) {
+            } else if (start >= block.start && start < block.end) {
                 v = false
-            } else if (start <= block.start && end>= block.end) {
+            } else if (start <= block.start && end > block.end) {
                 v = false
             } else if (end <= start) {
                 v = false

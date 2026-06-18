@@ -37,8 +37,8 @@ function App() {
     let [gems, setGems] = useState<number>(0)
 
     const [blocks, setBlocks] = useState<Block[]>([
-        {id:1, name: "string", start: 480, end: 540},
         {id:2, name: "string", start: 3*60, end: 7*60},
+        {id:1, name: "string", start: 480, end: 540},
         {id:3, name: "test", start: 15*60, end: 19*60}
     ])
 
