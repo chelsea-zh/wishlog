@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './ToDo.css'
 
 // task = {reward: 100, goal: "string", claimed: false}
@@ -23,20 +23,35 @@ export default function ToDo({changeGems, now}: {changeGems: (gems: number) => v
         {id: 13, reward: 200, goal: "test 4", claimed: false}
     ]);
     const [customTasks, setCustomTasks] = useState<Task[]>([]);
+    
+    const currentDow = now.toDateString();
+    const prevDow = useRef(currentDow);
 
-    let nextDay:Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-    let nextWeek:Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (7 - now.getDay()))
+    useEffect(() => {
+        if (prevDow.current !== currentDow) {
 
-    let dailyMs:number = nextDay.getTime() - now.getTime()
-    let weeklyMs:number = nextWeek.getTime() - now.getTime()
+            if (now.getDay() === 0) {
+                resetCustom();
+            }
 
-    let dailyCd:string = 
+            resetDailies();
+            prevDow.current  = currentDow;
+        }
+    }, [currentDow])
+
+    const nextDay:Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+    const nextWeek:Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (7 - now.getDay()))
+
+    const dailyMs:number = nextDay.getTime() - now.getTime()
+    const weeklyMs:number = nextWeek.getTime() - now.getTime()
+
+    const dailyCd:string = 
         "reset in " +
         String(Math.trunc(dailyMs/1000/60/60)).padStart(2, "0") + ":" +
         String(Math.trunc(dailyMs/1000/60%60)).padStart(2, "0") + ":" +
         String(Math.trunc(dailyMs/1000%60)).padStart(2, "0")
 
-    let weeklyCd:string = 
+    const weeklyCd:string = 
         "reset in " +
         String(Math.trunc(weeklyMs/1000/60/60/24)).padStart(2, "0") + "d " +
         String(Math.trunc(weeklyMs/1000/60/60%24)).padStart(2, "0") + ":" +
@@ -96,6 +111,35 @@ export default function ToDo({changeGems, now}: {changeGems: (gems: number) => v
     }
     function changeCustom() {
         setDaily(false)
+    }
+
+    function resetDailies() {
+        setDailyTasks(dailyTasks =>
+            dailyTasks.map(task =>
+                task.claimed === true
+                    ? { ...task, claimed: false }
+                    : task
+            )
+        )
+    }
+
+    function resetCustom() {
+        let ids:number[] = []
+
+        customTasks.forEach(task => {
+            if (task.claimed == true) {
+                ids.push(task.id)
+            }
+        });
+
+        let currDaily = daily
+        setDaily(false)
+
+        ids.forEach(id => {
+            deleteTask(id);
+        });
+
+        setDaily(currDaily)
     }
 
     return(
