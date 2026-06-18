@@ -30,16 +30,16 @@ function CurrencyBar({gems}:{gems: number}) {
 }
 
 
-type Block = {id: number, name: string, start: number, end: number}
+type Block = {id: string, name: string, start: number, end: number}
 
 function App() {
     let [page, setPage] = useState<string>("main")
     let [gems, setGems] = useState<number>(0)
 
     const [blocks, setBlocks] = useState<Block[]>([
-        {id:2, name: "string", start: 3*60, end: 7*60},
-        {id:1, name: "string", start: 480, end: 540},
-        {id:3, name: "test", start: 15*60, end: 19*60}
+        {id:"2", name: "string", start: 3*60, end: 7*60},
+        {id:"1", name: "string", start: 480, end: 540},
+        {id:"3", name: "test", start: 15*60, end: 19*60}
     ])
 
     const [now, setNow] = useState<Date>(new Date())

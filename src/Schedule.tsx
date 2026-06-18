@@ -1,7 +1,7 @@
 import { useState } from "react"
 import './Schedule.css'
 
-type Block = {id: number, name: string, start: number, end: number}
+type Block = {id: string, name: string, start: number, end: number}
 
 export default function Schedule({blocks, setBlocks}:{blocks:Block[], setBlocks: React.Dispatch<React.SetStateAction<Block[]>>}) {
 
@@ -136,7 +136,7 @@ function BlockInfo({blocks, addBlock, setCreating}
         })
 
         if (v) {
-            addBlock({id:blocks.length+1, name:title, start:start, end:end})
+            addBlock({id:crypto.randomUUID(), name:title, start:start, end:end})
             setCreating(false)
             setValid(true)
         } else {

@@ -1,23 +1,23 @@
 import { useEffect, useRef } from "react";
 import './Alarm.css'
 
-type Block = {id: number, name: string, start: number, end: number}
+type Block = {id: string, name: string, start: number, end: number}
 
 export default function Alarm({blocks, now}:{blocks:Block[], now:Date}) {
 
     let next:string = ""
-    let current:Block = {id: -1, name:"empty", start:0, end:0}
+    let current:Block = {id: "-1", name:"empty", start:0, end:0}
 
     current = 
         blocks.find(
             block => block.start <= toMinD(now) && block.end > toMinD(now)
-        ) ?? {id: -1, name:"empty", start:0, end:0}
+        ) ?? {id: "-1", name:"empty", start:0, end:0}
 
-    let nextB:Block = blocks.find(block => block.start > toMinD(now)) ?? {id: -1, name:"empty", start:0, end:0}
-    if (nextB.id != -1) {
+    let nextB:Block = blocks.find(block => block.start > toMinD(now)) ?? {id: "-1", name:"empty", start:0, end:0}
+    if (nextB.id != "-1") {
         next = "Upcoming: " + nextB.name
     } else {
-        if (current.id != -1) {
+        if (current.id != "-1") {
             next = "Last task of the day!"
         } else {
             next = "Done for the day!"
@@ -29,9 +29,9 @@ export default function Alarm({blocks, now}:{blocks:Block[], now:Date}) {
 
     useEffect(() => {
         if (prevBlock.current != current.id) {
-            if (prevBlock.current == -1) {
+            if (prevBlock.current == "-1") {
                 alert("start " + current.name)
-            } else if (prevBlock.current != -1 && current.id != -1) {
+            } else if (prevBlock.current != "-1" && current.id != "-1") {
                 alert("stop " + prevBlockName.current + " and start " + current.name)
             } else {
                 alert("stop " + prevBlockName.current)
@@ -49,7 +49,7 @@ export default function Alarm({blocks, now}:{blocks:Block[], now:Date}) {
     let currE:string = ""
     let currN:string = ""
 
-    if (current.id == -1) {
+    if (current.id == "-1") {
         hrLeft = 0
         minLeft = 0
         secLeft = 0
