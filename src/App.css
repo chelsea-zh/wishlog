@@ -37,7 +37,8 @@
 }
 
 .currencyBar {
-  background-color: var(--dark-1);
+  background-color: var(--dark-2);
+  color: var(--light-1);
   border-radius: var(--border-rad);
   position: absolute;
   top: 5vh;

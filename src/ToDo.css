@@ -17,6 +17,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 0px var(--border-rad) var(--border-rad) 0px;
+    cursor: pointer;
 }
 
 .dailies, .custom {
@@ -28,9 +29,32 @@
     grid-template-rows: 1fr 8fr;
 }
 
-.dailies span, .custom span {
+.inner {
     height: fit-content;
     align-self: center;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.all {
+    height: fit-content;
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.all h2 {
+    align-self: center;
+    padding-right: 1.5rem;
+}
+
+.infoButton {
+    cursor: pointer;
+    transition: color var(--hover-time);
+}
+
+.infoButton:hover {
+    color: var(--dark-2);
 }
 
 .dailies h1, .custom h1 {
@@ -170,4 +194,47 @@
     font-size: 1.5rem;
     padding: .5em;
     box-sizing: border-box;
+}
+
+.info {
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    z-index: -1;
+    left: -40vw;
+    top: -25vh;
+    width: 100vw;
+    height: 100vh;
+}
+
+.infoText {
+    background-color: var(--light-2);
+    padding: 1.5rem;
+    border-radius: var(--border-rad);
+    font-family: var(--text-font);
+    /* font-weight: bold; */
+    /* font-size: 1.25rem; */
+    font-size: calc(.7vw + .7vh);
+    text-align: justify;
+}
+
+.infoTodo {
+    width: 40vw;
+    height: 15vh;
+    position: absolute;
+    right: 10vw;
+    top: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoText h1 {
+    margin-right: 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color var(--hover-time);
+}
+
+.infoText h1:hover {
+    color: var(--dark-1);
 }

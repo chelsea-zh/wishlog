@@ -6,6 +6,8 @@ import './ToDo.css'
 type Task = {id: string, reward: number, goal: string, claimed: boolean}
 
 export default function ToDo({changeGems, now}: {changeGems: (gems: number) => void, now:Date}) {
+    const [todoTut, setTodoTut] = useState<boolean>(false)
+
     const [daily, setDaily] = useState<boolean>(true);
     const [dailyTasks, setDailyTasks] = useState<Task[]>([
         {id: "1", reward: 100, goal: "testiad ad;lkfj sdf a sdflk; slf d fsdfng", claimed: false},
@@ -52,7 +54,7 @@ export default function ToDo({changeGems, now}: {changeGems: (gems: number) => v
         String(Math.trunc(dailyMs/1000%60)).padStart(2, "0")
 
     const weeklyCd:string = 
-        "reset in " +
+        "clear in " +
         String(Math.trunc(weeklyMs/1000/60/60/24)).padStart(2, "0") + "d " +
         String(Math.trunc(weeklyMs/1000/60/60%24)).padStart(2, "0") + ":" +
         String(Math.trunc(weeklyMs/1000/60%60)).padStart(2, "0") + ":" +
@@ -143,21 +145,24 @@ export default function ToDo({changeGems, now}: {changeGems: (gems: number) => v
     }
 
     return(
-        <div className = "todo">
+        <div className = "todo" style={{zIndex: todoTut ? "1" : "auto"}}>
+            {todoTut && <Dinfo setTodoTut={setTodoTut} daily={daily}/>}
             {daily ? (
                 <Dailies 
                     dailyTasks={dailyTasks} 
                     deleteTask={deleteTask} 
                     claimTask={claimTask}
                     addTask={addTask}
-                    dailyCd={dailyCd}/>
+                    dailyCd={dailyCd}
+                    setTodoTut={setTodoTut}/>
             ) : (
                 <Custom 
                     customTasks={customTasks} 
                     deleteTask={deleteTask} 
                     claimTask={claimTask}
                     addTask={addTask}
-                    weeklyCd={weeklyCd}/>
+                    weeklyCd={weeklyCd}
+                    setTodoTut={setTodoTut}/>
             )}
             <ToDoSelector onClick={changeDaily} daily={daily}/>
             <ToDoSelector onClick={changeCustom} daily={!daily}/>
@@ -175,14 +180,19 @@ function ToDoSelector({onClick, daily}: {onClick: () => void, daily: boolean}) {
     )
 }
 
-function Dailies({dailyTasks, deleteTask, claimTask, addTask, dailyCd}:
-    {dailyTasks: Task[], deleteTask: (id: string) => void, claimTask: (id: string) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void, dailyCd:string}
+function Dailies({dailyTasks, deleteTask, claimTask, addTask, dailyCd, setTodoTut}:
+    {dailyTasks: Task[], deleteTask: (id: string) => void, claimTask: (id: string) => void, 
+        addTask: (task: {reward: number, goal: string, claimed: boolean}) => void, dailyCd:string,
+        setTodoTut: React.Dispatch<React.SetStateAction<boolean>>}
 ) {
     return(
         <div className="dailies">
-            <span>
-            <h1>Dailies</h1>
-            <h2>{dailyCd}</h2>
+            <span className='all'>
+                <span className='inner'>
+                    <h1>Dailies</h1>
+                    <h2>{dailyCd}</h2>
+                </span>
+            <h2 className='infoButton' onClick={() => setTodoTut(true)}>&#9432;</h2>
             </span>
             <TaskList 
                 tasks = {dailyTasks} 
@@ -193,14 +203,19 @@ function Dailies({dailyTasks, deleteTask, claimTask, addTask, dailyCd}:
     )
 }
 
-function Custom({customTasks, deleteTask, claimTask, addTask, weeklyCd}:
-    {customTasks: Task[], deleteTask: (id: string) => void, claimTask: (id: string) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void, weeklyCd:string}
+function Custom({customTasks, deleteTask, claimTask, addTask, weeklyCd, setTodoTut}:
+    {customTasks: Task[], deleteTask: (id: string) => void, claimTask: (id: string) => void, 
+        addTask: (task: {reward: number, goal: string, claimed: boolean}) => void, weeklyCd:string
+        setTodoTut: React.Dispatch<React.SetStateAction<boolean>>}
 ) {
     return(
         <div className="custom">
-            <span>
-            <h1>Custom</h1>
-            <h2>{weeklyCd}</h2>
+            <span className='all'>
+                <span className='inner'>
+                    <h1>Custom</h1>
+                    <h2>{weeklyCd}</h2>
+                </span>
+            <h2 className='infoButton' onClick={() => setTodoTut(true)}>&#9432;</h2>
             </span>
             <TaskList 
                 tasks = {customTasks} 
@@ -212,7 +227,8 @@ function Custom({customTasks, deleteTask, claimTask, addTask, weeklyCd}:
 }
 
 function TaskList({tasks, deleteTask, claimTask, addTask}:
-    {tasks: Task[], deleteTask: (id: string) => void, claimTask: (id: string) => void, addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}
+    {tasks: Task[], deleteTask: (id: string) => void, claimTask: (id: string) => void, 
+        addTask: (task: {reward: number, goal: string, claimed: boolean}) => void}
 ) {
     return(
         <div className='tasklist'>
@@ -318,6 +334,32 @@ function TaskCreator({addTask}: {addTask: (task: {reward: number, goal: string, 
                     setReward(""); setGoal("")}
                 }>Add</button>
             {/* </form> */}
+        </div>
+    )
+}
+
+function Dinfo({setTodoTut, daily}:{setTodoTut: React.Dispatch<React.SetStateAction<boolean>>, daily:boolean}) {
+    return(
+        <div className='info'>
+            <div className='infoText infoTodo'>
+                <h1 onClick={() => setTodoTut(false)}>&#x2715;</h1>
+                {daily && <p>
+                Dailies are for your tasks that are repeated day after day. 
+                Daily tasks reset at midnight; claimed tasks will be unclaimed the next day. 
+                <br/>
+                <br/>
+                Each task rewards you with currency that can be spent on wishes. 
+                Create your own tasks and specify their reward amount at the bottom.
+                </p>}
+                {!daily && <p>
+                Custom tasks for your standard to-do list. 
+                Custom tasks do not reset; at the end of each week, claimed tasks are deleted. 
+                <br/>
+                <br/>
+                Each task rewards you with currency that can be spent on wishes. 
+                Create your own tasks and specify their reward amount at the bottom.
+                </p>}
+            </div>
         </div>
     )
 }
