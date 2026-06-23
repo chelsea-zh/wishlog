@@ -340,8 +340,9 @@ function TaskCreator({addTask}: {addTask: (task: {reward: number, goal: string, 
 
 function Dinfo({setTodoTut, daily}:{setTodoTut: React.Dispatch<React.SetStateAction<boolean>>, daily:boolean}) {
     return(
-        <div className='info'>
-            <div className='infoText infoTodo'>
+        <div className='info infoTodo'>
+            {/* <div className="infoHighlight"></div> */}
+            <div className='infoText'>
                 <h1 onClick={() => setTodoTut(false)}>&#x2715;</h1>
                 {daily && <p>
                 Dailies are for your tasks that are repeated day after day. 

@@ -1,10 +1,11 @@
 import { useState } from "react"
 import './Schedule.css'
+import './ToDo.css'
 
 type Block = {id: string, name: string, start: number, end: number}
 
 export default function Schedule({blocks, setBlocks}:{blocks:Block[], setBlocks: React.Dispatch<React.SetStateAction<Block[]>>}) {
-
+    const [schedTut, setSchedTut] = useState<boolean>(false)
 
     function addBlock(block: Block){
         let added = [...blocks, block]
@@ -19,14 +20,19 @@ export default function Schedule({blocks, setBlocks}:{blocks:Block[], setBlocks:
     }
 
     return(
-        <div className = "schedule">
+        <div className = "scheduleCont" style={{zIndex: schedTut ? "1" : "auto"}}>
+            {schedTut && <Sinfo setSchedTut={setSchedTut}/>}
+            <div className="schedule">
+            <div className="infoButton">
+                <h2 onClick={() => setSchedTut(true)}>&#9432;</h2>
+            </div>
             <Day />
             <div style={{position:'relative'}}>
                 <Timeline />
-                <Blocks 
-                    blocks={blocks}  deleteBlock={deleteBlock}/>
+                <Blocks blocks={blocks}  deleteBlock={deleteBlock}/>
             </div>
             <BlockCreator blocks={blocks} addBlock={addBlock}/>
+            </div>
         </div>
     )
 }
@@ -188,6 +194,26 @@ function BlockInfo({blocks, addBlock, setCreating}
                 <h2>Try again.</h2>
                 <button onClick = {() => {setValid(null); setCreating(false)}}>OK</button>
             </div>}
+        </div>
+    )
+}
+
+function Sinfo({setSchedTut}:{setSchedTut: React.Dispatch<React.SetStateAction<boolean>>}) {
+    return(
+        <div className="info infoSched">
+            {/* <div className="infoHighlight"></div> */}
+            <div className="infoText">
+                <h1 onClick={() => setSchedTut(false)}>&#x2715;</h1>
+                <p>
+                    This block will display the 24 hours of the current day.
+                    Click the "+" in the left corner to add a block of time to your day.
+                    Added blocks will be displayed; click the "-" in the right corner to delete one.
+                    <br/>
+                    <br/>
+                    The alarm page will act as a countdown during your added times, as well as notify when a block starts or ends.
+                    It will also display the title of the upcoming block at the bottom.
+                </p>
+            </div>
         </div>
     )
 }
