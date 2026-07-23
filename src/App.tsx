@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import ToDo from './ToDo'
 import Schedule from './Schedule'
 import Alarm from './Alarm'
+import Wish from './Wish'
 import './App.css'
 
 function Title() {
@@ -17,6 +18,7 @@ function Sidebar({setPage}:{setPage: React.Dispatch<React.SetStateAction<string>
         <div className='sidebar'>
             <h1 onClick={() => setPage("main")}>Home</h1>
             <h1 onClick={() => setPage("alarm")}>Alarm</h1>
+            <h1 onClick={() => setPage("wish")}>Wish</h1>
         </div>
     )
 }
@@ -71,6 +73,9 @@ function App() {
             </div>
             <div hidden = {page !== "alarm"}>
                 <Alarm blocks={blocks} now={now}/>
+            </div>
+            <div hidden = {page !== "wish"}>
+                <Wish gems={gems} changeGems={changeGems}/>
             </div>
         </div>
     );
