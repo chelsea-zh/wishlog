@@ -39,14 +39,16 @@ function InfoList({setInfoList}:{setInfoList: React.Dispatch<React.SetStateActio
 export default function Wish({gems, changeGems}: {gems: number, changeGems: (x: number) => void}) {
     const [infoList, setInfoList] = useState<boolean>(false)
 
-    const [rewardList, setRewardList] = useState<Set[]>([{id: "test", name:"test", items: [{id: "broidk", name: "test", image: "src/placeholder.png", star: 5, owned: true}]}])
+    const [rewardList, setRewardList] = useState<Set[] | null>(null)
 
     // for vite to build:
-    setRewardList([{id: "test", name:"test", items: [{id: "broidk", name: "test", image: "src/placeholder.png", star: 5, owned: true}]}])
-    for (let i = 0; i < 1; i++) {
+    while (5 < 0) {
         console.log(gems)
-        for (const l of rewardList) {
-            console.log(l)
+        if (rewardList) {
+            for (const l of rewardList) {
+                console.log(l)
+            }
+            setRewardList(null)
         }
     }
 

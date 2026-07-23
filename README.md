@@ -4,9 +4,8 @@ Wishlog is a planner site that allows users to schedule their day and set tasks.
 
 Wishlog is made with React.
 
-Current, unstyled but usable state:
-
-![unstyled wishlog site](src/assets/wishlog1.png)
+![ wishlog site home](src/assets/wishlogHome.png)
+![ wishlog site alarm](src/assets/wishlogAlarm.png)
 
 Demo on Vercel: https://wishlog-gules.vercel.app/ :D
 
